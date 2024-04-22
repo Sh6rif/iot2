@@ -1,7 +1,18 @@
 # Import the necessary modules
-import paho.mqtt.client as mqtt
 from time import sleep
 import sys
+import subprocess
+
+try:
+    import paho.mqtt.client as mqtt
+except ImportError:
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "paho-mqtt==1.6.1"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        import paho.mqtt.client as mqtt
+    except subprocess.CalledProcessError:
+        print("Failed to install 'autocorrect' module. Please install it manually using 'pip install paho-mqtt'")
+        sys.exit(1)
+     
 
 # MQTT broker address
 broker_ip = "192.168.137.1"
